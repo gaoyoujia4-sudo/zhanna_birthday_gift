@@ -1,0 +1,25 @@
+# Render 部署配置（Blueprint）
+# 用法：render.com 用 GitHub 登录 → New → Blueprint → 选择本仓库，Render 会自动读取此文件。
+#
+# 说明：
+#  - 免费套餐（plan: free）不支持持久磁盘；服务空闲约 15 分钟会休眠，
+#    且重新部署/重启时 data/gift.db 会被重置，因此“访问次数”会清零
+#    （“认识的天数”不受影响，它由前端 content.js 的 startDate 本地计算）。
+#  - 如需永久保留访问次数，请升级到 Starter 套餐，并取消下方 disk 段的注释。
+
+services:
+  - type: web
+    name: birthday-gift
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 24.19.0
+    # 升级到 Starter 后取消注释，把持久磁盘挂载到 data 目录以保留访问次数：
+    # disk:
+    #   name: gift-data
+    #   mountPath: /opt/render/project/src/data
+    #   sizeGB: 1
