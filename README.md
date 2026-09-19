@@ -35,10 +35,22 @@ npm run dev
 
 ## 三、部署到 Vercel（生成正式网址）
 
-1. 把整个 `gift` 文件夹推送到一个 GitHub 仓库（可 `git init` 后提交）。
-2. 打开 [vercel.com](https://vercel.com)，用 GitHub 登录 → **Add New → Project** → 选择该仓库，Vercel 会自动识别（无需改构建命令）。
-3. 进入项目 **Storage** → 创建一个 **KV Database**，按提示关联到本项目（Vercel 会自动注入环境变量，后端 `api/stats.js` 即用 `@vercel/kv` 读写访问次数）。
-4. 点 **Deploy**，完成后得到一个网址，形如 `https://你的项目.vercel.app`。
+### 1. 推送到 GitHub
+
+本地仓库已初始化并提交（分支 `main`）。在 GitHub 上新建一个**空仓库**（**不要**勾选 README / .gitignore，避免冲突），然后在 `gift` 目录执行：
+
+```bash
+git remote add origin https://github.com/<你的用户名>/<仓库名>.git
+git push -u origin main
+```
+
+### 2. Vercel 部署
+
+1. 打开 [vercel.com](https://vercel.com)，用 GitHub 登录 → **Add New → Project** → 选择该仓库，Vercel 会自动识别（无需改构建命令）。
+2. 进入项目 **Storage** → 创建一个 **KV Database**，按提示关联到本项目（Vercel 会自动注入环境变量，后端 `api/stats.js` 即用 `@vercel/kv` 读写访问次数）。
+3. 点 **Deploy**，完成后得到一个网址，形如 `https://你的项目.vercel.app`。
+
+> 建议：建好 KV 数据库后重新部署一次，确保访问计数功能生效（未建 KV 时前端会优雅降级）。
 
 > 注意：`api/` 目录会被 Vercel 自动识别为 Serverless Function；`vercel.json` 里 `outputDirectory: "frontend"` 指定静态前端目录。KV 未创建时访问次数会返回 `null`，前端会优雅降级。
 
