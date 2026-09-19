@@ -1,0 +1,18 @@
+{
+  "name": "birthday-gift",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "生日祝福礼物网站（前后端分离：前端静态 + Vercel 后端 API + KV 数据库）",
+  "scripts": {
+    "dev": "node server/dev.js",
+    "start": "node server/dev.js",
+    "qr": "node scripts/qrcode.js"
+  },
+  "dependencies": {
+    "@vercel/kv": "^2.0.0"
+  },
+  "devDependencies": {
+    "qrcode": "^1.5.4"
+  }
+}
